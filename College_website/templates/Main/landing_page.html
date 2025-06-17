@@ -1,0 +1,110 @@
+{% load static %}
+<style>
+
+.bg-text {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.8); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 70%;
+  height: 50%;
+  padding: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+button {
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: 1em 1.8em;
+  background: var(--primary-color);
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+body{
+    background-image: url("{% static '/image/uni_image.jpg'%}");
+    background-size: cover; /* Optional: Makes the image cover the entire screen */
+    background-position: center; /* Optional: Centers the image */
+    background-attachment: fixed; /* Optional: Keeps the background image fixed while scrolling */
+    background-repeat: no-repeat;
+    backdrop-filter: blur(2px);
+    font-family:'Times New Roman', Times, serif;
+}
+    .messages {
+list-style: none;
+margin: 1em 0 2em;
+padding: 0;
+}
+
+.messages li {
+    padding: .5em;
+    width: 50%;
+    line-height: .5em;
+}
+
+.messages li.info, .messages li.debug {
+    background-color: #d0ebff;
+}
+
+.messages li.success {
+    background-color: #b2f2bb;
+}
+
+.message li.warning {
+    background-color: #ffec99;
+}
+
+.messages li.error {
+    background-color: #ffe3e3;
+}
+</style>
+<html>
+    <body>
+        <center>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </center>
+        <br>
+        <div class="bg-text">
+            <br>
+            <!-- <img src="{% static '/image/logo.png'%}"> -->
+            <h1 style="color: wheat; margin: 0;">A.K UNIVERSITY</h1>
+            <br>
+            <br>
+            <p style="font-size: 20 ;">
+                At A.K University, we believe in nurturing curiosity, inspiring innovation, and shaping the leaders of tomorrow.
+                 Whether you're a prospective student, esteemed faculty member, or an inquisitive visitor, our doors are always open to knowledge, growth, and excellence.
+                 Join us in our mission to create a brighter future—where learning knows no bounds! 🌟 <br><br>Welcome to A.K University—where your journey begins.
+            </p>
+            <br>
+            <form method="post">
+                {% csrf_token %}        
+                <button type="submit" style="margin-right: 20;" name="log_btn" value="login">Login</button>  
+                <button type="submit" name="new_btn" value="new_user">SIGNUP</button>
+            </form>
+        </div>
+    </body>
+</html>  

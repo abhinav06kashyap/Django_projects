@@ -1,0 +1,210 @@
+{% load static %}
+<style>
+.head-flag{
+    background-color:whitesmoke;
+    text-align: center;
+    color: black;
+    height: 40;
+    font-size: 18;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+    padding: 0 0 5 20;
+    margin: -8;
+    box-shadow:
+    #d6d6e7 0 0 0 1.5px inset,
+    rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+    #d6d6e7 0 -3px 0 inset;
+}
+
+.button-name {
+  align-items: center;
+  appearance: none;
+  background-color: green;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow:
+    rgba(45, 35, 66, 0.2) 0 2px 4px,
+    rgba(45, 35, 66, 0.15) 0 7px 13px -3px,
+    green 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 15px;
+}
+
+.button-name:focus {
+  box-shadow:
+    #d6d6e7 0 0 0 1.5px inset,
+    rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+    #d6d6e7 0 -3px 0 inset;
+}
+
+.button-name:hover {
+  box-shadow:
+    rgba(45, 35, 66, 0.3) 0 4px 8px,
+    rgba(45, 35, 66, 0.2) 0 7px 13px -3px,
+    #d6d6e7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-name:active {
+  box-shadow: #d6d6e7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+.button-main {
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: .6em 1.0em;
+  background: var(--primary-color);
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+}
+
+.button-main:hover {
+  background-color: var(--hover-color);
+}
+
+.bg-text {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.9); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 30%;
+  height: 40%;
+  padding: 20px;
+  text-align: center;
+}
+
+body{
+    background-image: url("{% static '/image/gate_image.jpg'%}");
+    background-size: cover; /* Optional: Makes the image cover the entire screen */
+    background-position: center; /* Optional: Centers the image */
+    background-attachment: fixed; /* Optional: Keeps the background image fixed while scrolling */
+    background-repeat: no-repeat;
+    backdrop-filter: blur(2px);
+}    
+.messages {
+list-style: none;
+margin: 1em 0 2em;
+padding: 0;
+}
+
+.messages li {
+    padding: .5em;
+    width: 50%;
+    line-height: .5em;
+}
+
+.messages li.info, .messages li.debug {
+    background-color: #d0ebff;
+}
+
+.messages li.success {
+    background-color: #b2f2bb;
+}
+
+.message li.warning {
+    background-color: #ffec99;
+}
+
+.messages li.error {
+    background-color: #ffe3e3;
+}
+
+.input {
+  border: 2px solid transparent;
+  position: relative;
+  width: 17em;
+  height: 2.5em;
+  margin-left: 10;
+  padding-left: 0.8em;
+  outline: none;
+  overflow: hidden;
+  background-color: #F3F3F3;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.input:hover,
+.input:focus {
+  border: 2px solid #4A9DEC;
+  box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+  background-color: white;
+}
+</style>
+<html>
+  <head>
+        <div class="head-flag">
+            <label style="position: absolute; left: 10; top: 5; margin: 0%;"><img style="height: 30;" src="{% static '/image/logo.png'%}" ></label>
+            <a href="{% url 'landing_page'%}"><button class="button-main" style="position: absolute; right: 20; top: 6; margin: 0%;">Main Page</button></a>
+        </div>
+    </head>
+    <body >
+        <center>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </center>
+        <div class="bg-text">
+            <form method="post">
+                {% csrf_token %}
+                <br>
+                <h1 style="color: wheat; margin: 0;">LOGIN</h1>
+                <br>
+                <br>
+                <label for="email" style="display: inline-block; margin-right: 55;">Email:</label> 
+                <input type="text" name="email" class="input" required>
+                <br>
+                <br>
+                <label for="p_word" style="display: inline-block; margin-right: 30;">Password:</label>  
+                <input type="text" name="p_word" class="input"  required>
+                <br>
+                <br>   
+                <a href="{% url 'change_password' %}" style="font-size: small; color: white;">Change password</a>
+                <br>
+                <br>
+                <center>
+                    <button type="submit" class="button-name">Login</button>
+                </center>
+            </form>
+        </div>
+    </body>
+</html>

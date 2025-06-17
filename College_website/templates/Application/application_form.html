@@ -1,0 +1,248 @@
+{% load static %}
+<style>
+.input {
+  border: 2px solid transparent;
+  position: relative;
+  width: 17em;
+  height: 2.5em;
+  margin-left: 10;
+  padding-left: 0.8em;
+  outline: none;
+  overflow: hidden;
+  background-color: #F3F3F3;
+  border-radius: 10px;
+  transition: all 0.5s;
+}
+
+.input:hover,
+.input:focus {
+  border: 2px solid #4A9DEC;
+  box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+  background-color: white;
+}
+
+.head-flag{
+    background-color:whitesmoke;
+    text-align: center;
+    color: black;
+    height: 40;
+    font-size: 18;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+    padding: 0 0 5 20;
+    margin: -8;
+    box-shadow:
+    #d6d6e7 0 0 0 1.5px inset,
+    rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px,
+    #d6d6e7 0 -3px 0 inset;
+    font-weight: bold;
+}
+
+.button-name {
+  align-items: center;
+  appearance: none;
+  background-color: rgb(222, 237, 243);
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow:
+    rgba(45, 35, 66, 0.2) 0 2px 4px,
+    rgba(45, 35, 66, 0.15) 0 7px 13px -3px,
+    white 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: black;
+  cursor: pointer;
+  display: inline-flex;
+  height: 40px;
+  width: 100px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    box-shadow 0.15s,
+    transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 12px;
+}
+
+.button-name:hover {
+    color: white;
+    box-shadow:
+        rgba(45, 35, 66, 0.3) 0 4px 8px,
+        rgba(45, 35, 66, 0.2) 0 7px 13px -3px,
+        #d6d6e7 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+
+button {
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: .6em 1.0em;
+  background: var(--primary-color);
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+  height: fit-content;
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+body{
+    background-image: url("{% static '/image/application_bg.jpg'%}");
+    background-size:cover; /* Optional: Makes the image cover the entire screen */
+    background-position: center; /* Optional: Centers the image */
+    background-attachment: fixed; /* Optional: Keeps the background image fixed while scrolling */
+    background-repeat:no-repeat;
+    backdrop-filter: blur(1px);
+    font-family:'Times New Roman', Times, serif;
+}
+
+.messages {
+list-style: none;
+margin: 1em 0 2em;
+padding: 0;
+}
+
+.messages li {
+    padding: .5em;
+    width: 50%;
+    line-height: .5em;
+}
+
+.messages li.info, .messages li.debug {
+    background-color: #d0ebff;
+}
+
+.messages li.success {
+    background-color: #b2f2bb;
+}
+
+.message li.warning {
+    background-color: #ffec99;
+}
+
+.messages li.error {
+    background-color: #ffe3e3;
+}
+
+input{
+    width: 300;
+}
+
+
+.form-div{
+    position: absolute;
+    left: 27%; 
+    margin-top: 40; 
+    border-radius: 4px; 
+    font-weight: bolder; 
+    background-color: white; 
+    height: fit-content;
+    padding: 50; 
+    padding-bottom: 30;
+    margin-bottom: 50;
+    min-width: 40%;
+    width: fit-content;
+}
+</style>
+
+<html>
+    <head>
+        <div class="head-flag">
+            <label style="position: absolute; left: 10; top: 5; margin: 0%;"><img style="height: 30;" src="{% static '/image/logo.png'%}" ></label>
+            <label style="position: relative; top: 8; font-size: 25;">APPLICATION FORM</label>
+            <form method="post">
+                {% csrf_token %}
+                <button class="" name="back" value="{{U_ID}}" style="position: absolute; left: 200; top: 6; margin: 0%;">Home</button>
+            </form>        
+            <a href="{% url 'landing_page'%}"><button class="button-log" style="position: absolute; right: 10; top: 6; margin: 0%; --primary-color: red;">Logout</button></a>
+        </div>
+    </head>
+    <body>
+        <center>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </center>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-div">
+              <center>
+              <label for="unique_id" style="display: inline-block; margin-right: 140px;">Unique ID* :</label>
+              <input type="text" class="input" name="unique_id" value="{{ U_ID }}" required readonly> 
+              <br>
+              <br>
+              <label for="f_name" style="display: inline-block; margin-right: 138px;">First name* :</label>
+              <input type="text" class="input" name="f_name" value="{{f_n}}" required>
+              <br>
+              <br>
+              <label for="l_name" style="display: inline-block; margin-right: 150px;">Last name :</label>
+              <input type="text" class="input" name="l_name" value="{{l_n}}">
+              <br>
+              <br>
+              <label for="fandg_name" style="display: inline-block; margin-right: 35px;">Father or Gaurdian Name* :</label>
+              <input type="text" class="input" name="fandg_name" value="{{f_g_n}}"  required>
+              <br>
+              <br>
+              <label for="gen" style="display: inline-block; margin-right: 175px;">Gender :</label>
+              <input type="radio" name="gen" value="Male" style="width: 25; margin-left: 0;">Male
+              <input type="radio" name="gen" value="Female"style="width: 25;">Female
+              <input type="radio" name="gen" value="Others"style="width: 25;">Others
+              <br>
+              <br>
+              <lable for="email" style="display: inline-block; margin-right: 165px;">E-Mail* :</lable>
+              <input type="text" class="input" name="email" value="{{st_mail}}"required readonly>
+              <br>
+              <br>
+              <lable for="phone" style="display: inline-block; margin-right: 170px;">Phone* :</lable>
+              <input type="text" class="input" name="phone" value="{{ph}}" required>
+              <br>
+              <br>
+              <lable for="course" style="display: inline-block; margin-right: 90px;">Select your course* :</lable>
+              <input list="Courses" class="input" name="course" value="{{course}}" required>
+              <datalist id="Courses">
+                  <option value="BBA">
+                  <option value="BCA">
+                  <option value="BA">
+                  <option value="MCA">
+                  <option value="MBA">
+                  <option value="Btech">
+                  <option value="Mtech">
+              </datalist>
+              <br>
+              <br>
+              <lable for="b_date" style="display: inline-block; margin-right: 140px;">Birth Date* :</lable>
+              <input type="date" class="input" name="b_date" value="{{b_d}}"  required>
+              <center style="margin-top: 40;">
+                  <button type="submit" class="button-name">SUBMIT</button>
+                  {% if not f_n %}
+                  <button type="reset" class="button-name">RESET</button>
+                  {%endif%}
+              </center>
+              </center>
+            </div>
+        </form>
+    </body>
+</html>
